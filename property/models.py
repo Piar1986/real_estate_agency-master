@@ -22,11 +22,12 @@ class Flat(models.Model):
     active = models.BooleanField("Активно-ли объявление", db_index=True)
     construction_year = models.IntegerField("Год постройки здания", null=True, blank=True, db_index=True)
     new_building = models.NullBooleanField("Новое-ли здание", db_index=True)
+    liked_by = models.ManyToManyField(User, verbose_name="Кто лайкнул", related_name="liked_flats", blank=True)
 
     def __str__(self):
         return f"{self.town}, {self.address} ({self.price}р.)"
 
-class Complaint(models.Model):
+class Complaints(models.Model):
     user = models.ForeignKey(User, verbose_name="Кто жаловался", on_delete=models.CASCADE)
     flat = models.ForeignKey(Flat, verbose_name="Квартира, на которую пожаловались", null=True, on_delete=models.CASCADE)
     complaint_text = models.TextField("Текст жалобы")
