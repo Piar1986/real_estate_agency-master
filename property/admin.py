@@ -20,6 +20,7 @@ class ComplaintAdmin(admin.ModelAdmin):
 admin.site.register(Complaint, ComplaintAdmin)
 
 class OwnerAdmin(admin.ModelAdmin):
+    search_fields = ('phone_pure',)
     list_display = ('name',)
     raw_id_fields = ('flat',)
 
