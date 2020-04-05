@@ -8,12 +8,14 @@ from property.models import Owner
 def load_owner_flats(apps, schema_editor):
     for flat in Flat.objects.all():
         owner = Owner.objects.get_or_create(name=flat.owner_deprecated, phone_pure=flat.owner_phone_pure)
-        owner[0].flat.set([flat])
+        owner_flat = owner[0].flat
+        owner_flat.set([flat])
 
 def load_flat_owners(apps, schema_editor):
     for owner in Owner.objects.all():
         flat = Flat.objects.get_or_create(owner_deprecated=owner.name, owner_phone_pure=owner.phone_pure)
-        flat[0].owner.set([owner])
+        flat_owner = flat[0].owner
+        flat_owner.set([owner])
 
 
 class Migration(migrations.Migration):
