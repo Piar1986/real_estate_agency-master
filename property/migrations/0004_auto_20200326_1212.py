@@ -5,10 +5,7 @@ from property.models import Flat
 
 def fill_new_building(apps, schema_editor):
     for flat in Flat.objects.all():
-        if flat.construction_year >= 2015:
-            flat.new_building = True
-        else:
-            flat.new_building = False
+        flat.new_building = (not flat.construction_year < 2015)
         flat.save()
 
 class Migration(migrations.Migration):
