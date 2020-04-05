@@ -28,8 +28,9 @@ class Flat(models.Model):
         return f"{self.town}, {self.address} ({self.price}р.)"
 
 class Complaint(models.Model):
-    author = models.ForeignKey(User, verbose_name="Кто жаловался", on_delete=models.CASCADE)
-    flat = models.ForeignKey(Flat, verbose_name="Квартира, на которую пожаловались", null=True, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, verbose_name="Кто жаловался", related_name="complaints", on_delete=models.CASCADE)
+    flat = models.ForeignKey(Flat, verbose_name="Квартира, на которую пожаловались", related_name="complaints", 
+        null=True, on_delete=models.CASCADE)
     complaint_text = models.TextField("Текст жалобы")
 
 class Owner(models.Model):
