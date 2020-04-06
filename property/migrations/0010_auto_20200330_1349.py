@@ -2,10 +2,9 @@
 
 from django.db import migrations
 from django.apps import apps
-from property.models import Flat
-from property.models import Owner
 
 def load_owners(apps, schema_editor):
+    Flat = apps.get_model('property','Flat')
     Owner = apps.get_model('property','Owner')
     for flat in Flat.objects.all():
         Owner.objects.get_or_create(phone_pure=flat.owner_phone_pure, defaults={

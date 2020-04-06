@@ -2,16 +2,18 @@
 
 from django.db import migrations
 from django.apps import apps
-from property.models import Flat
-from property.models import Owner
 
 def load_owner_flats(apps, schema_editor):
+    Flat = apps.get_model('property','Flat')
+    Owner = apps.get_model('property','Owner')
     for flat in Flat.objects.all():
         owner = Owner.objects.get_or_create(name=flat.owner_deprecated, phone_pure=flat.owner_phone_pure)
         owner_flat = owner[0].flat
         owner_flat.set([flat])
 
 def load_flat_owners(apps, schema_editor):
+    Flat = apps.get_model('property','Flat')
+    Owner = apps.get_model('property','Owner')
     for owner in Owner.objects.all():
         flat = Flat.objects.get_or_create(owner_deprecated=owner.name, owner_phone_pure=owner.phone_pure)
         flat_owner = flat[0].owner
